@@ -1,0 +1,61 @@
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Shmup
+{
+    public class Projectile: Regular2d
+    {
+        public bool isHit;
+        public float speed;
+        public Vector2 direction;
+        public Char2D owner;
+        public MyTimer timer;
+        
+
+        public Projectile(string texPath, Vector2 pos, Vector2 dim, Char2D owner, Vector2 tar ): base(texPath, pos, dim) {
+
+            isHit = false;
+            speed = 10f;
+            this.owner = owner;
+
+            direction = tar - this.owner.pos;
+            direction.Normalize();
+            timer = new MyTimer(700);
+        }
+
+        public virtual void Update(List<Char2D> hits)
+        {
+            pos += direction * speed;
+            timer.UpdateTimer();
+            if (timer.isReady())
+            {
+                isHit = true;
+            }
+            if (DidHit(hits))
+            {
+                isHit = true;
+            }
+        }
+
+        public virtual bool DidHit(List<Char2D> hits) {
+            for(int i = 0; i < hits.Count; i++)
+            {
+                if(Vector2.Distance(this.pos, hits[i].pos) < hits[i].hitDistance)
+                {
+                    hits[i].TakeDamage(1f);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public override void Draw()
+        {
+            base.Draw();
+        }
+    }
+}
