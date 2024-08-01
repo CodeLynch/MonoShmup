@@ -10,11 +10,13 @@ namespace Shmup
     public class Ship : Char2D
     {
         private float speed;
+        private MyTimer fireTimer = new MyTimer(150);
         public Ship(string texPath, Vector2 pos, Vector2 dim) : base(texPath, pos, dim)
         {
             health = 5;
             healthMax = health;
             speed = 3f;
+            
         }
 
         public override void Update()
@@ -38,6 +40,15 @@ namespace Shmup
             if (Globals.mouse.LeftClick())
             {
                 GameGlobals.PassProjectile(new Bullet(new Vector2(this.pos.X, this.pos.Y - 10), new Vector2(pos.X, pos.Y), this));
+            }
+            if (Globals.mouse.LeftClickHold())
+            {
+                fireTimer.UpdateTimer();
+                if (fireTimer.isReady())
+                {
+                    GameGlobals.PassProjectile(new Bullet(new Vector2(this.pos.X, this.pos.Y - 10), new Vector2(pos.X, pos.Y), this));
+                    fireTimer.ResetToZero();
+                }
             }
 
             base.Update();

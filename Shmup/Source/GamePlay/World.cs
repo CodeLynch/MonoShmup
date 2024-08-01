@@ -22,8 +22,9 @@ namespace Shmup
         public List<Enemy> enemies = new();
         public List<Spawn> spawnpts = new();
         public UI ui;
+        public PassObject resetGame;
 
-        public World()
+        public World(PassObject reset)
         {
             score = 0;
             ship = new Ship(Globals.SPRITE_PATH + "vector", new Vector2(380, 390), new Vector2(32, 32));
@@ -38,10 +39,21 @@ namespace Shmup
             spawnpts[spawnpts.Count - 1].spawnTimer.AddToTimer(5000000);
 
             ui = new UI();
+
+            resetGame = reset;
         }
 
         public virtual void Update()
         {
+            if (ship.isDead) {
+                if (Globals.keyboard.GetPress("Enter"))
+                {
+                    resetGame(null);
+                }
+            }
+            else
+            {
+
             ship.Update();
 
             for (int i = 0; i < spawnpts.Count; i++)
@@ -66,6 +78,7 @@ namespace Shmup
                     i--;
                 }
             }
+            }
 
             ui.Update(this);
         }
@@ -81,24 +94,24 @@ namespace Shmup
 
         public virtual void Draw()
         {
-            ship.Draw();
+
+            if (!ship.isDead) { 
+                ship.Draw();
+                for (int i = 0; i < projectiles.Count; i++)
+                {
+                    projectiles[i].Draw();
+                }
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies[i].Draw();
+                }
+                for (int i = 0; i < spawnpts.Count; i++)
+                {
+                    spawnpts[i].Draw();
+                }
+            }
+
             pilot.Draw();
-
-           
-
-            for (int i = 0; i < projectiles.Count; i++)
-            {
-                projectiles[i].Draw();
-            }
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                enemies[i].Draw();
-            }
-            for (int i = 0; i < spawnpts.Count; i++)
-            {
-                spawnpts[i].Draw();
-            }
-
             ui.Draw(this);
         }
 

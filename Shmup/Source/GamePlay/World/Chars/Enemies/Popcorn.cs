@@ -11,6 +11,7 @@ namespace Shmup
     {
         public Popcorn(Vector2 pos) : base(Globals.SPRITE_PATH + "\\Enemies\\Popcorn", pos, new Vector2(16,16))
         {
+            base.speed = 4.5f;
         }
 
         public override void Update()

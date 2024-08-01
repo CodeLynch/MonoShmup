@@ -9,7 +9,7 @@ namespace Shmup
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        World world;
+        GamePlay gameplay;
         Regular2d cursor;
         public Game1()
         {
@@ -42,7 +42,7 @@ namespace Shmup
             cursor = new Regular2d(Globals.SPRITE_PATH + "\\cursor\\cursor", Vector2.Zero, new Vector2(16, 16));
             Globals.keyboard = new MyKeyboard();
             Globals.mouse = new MyMouseControl();
-            world = new World();
+            gameplay = new GamePlay();
 
 
         }
@@ -56,7 +56,7 @@ namespace Shmup
             Globals.gameTime = gameTime;
             Globals.keyboard.Update();
             Globals.mouse.Update();
-            world.Update();
+            gameplay.Update();
             Globals.keyboard.UpdateOld();
             Globals.mouse.UpdateOld();
 
@@ -70,7 +70,7 @@ namespace Shmup
             // TODO: Add your drawing code here
             Globals.spriteBatch.Begin();
 
-            world.Draw();
+            gameplay.Draw();
             cursor.Draw(new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMouse.Y), Vector2.Zero, Color.White);
             Globals.spriteBatch.End();
 

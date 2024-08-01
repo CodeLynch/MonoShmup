@@ -9,7 +9,7 @@ namespace Shmup
 {
     public class Enemy: Char2D
     {
-        private float speed;
+        public float speed;
         public Enemy(string texPath,Vector2 pos, Vector2 dim): base(texPath, pos, dim)
         {
             speed = 2f;
