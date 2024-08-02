@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,26 +10,51 @@ namespace Shmup
 {
     public class Spawn: Regular2d
     {
-        public MyTimer spawnTimer = new MyTimer(2500);
+        public MyTimer burstTimer = new MyTimer(100);
+        public MyTimer coolDown = new MyTimer(3000);
+        private int counter = 0;
+        private bool canSpawn = false;
         public Spawn(Vector2 pos, Vector2 dim) : base(Globals.SPRITE_PATH + "\\enemies\\popcorn", pos, dim)
         {
         }
 
         public override void Update() {
-
-            spawnTimer.UpdateTimer();
-            if (spawnTimer.isReady())
+            coolDown.UpdateTimer();
+            if (coolDown.isReady())
             {
-                SpawnEnemy();
-                spawnTimer.ResetToZero();
+                canSpawn = !canSpawn;
+                coolDown.ResetToZero();
             }
+            if (canSpawn)
+            {
+                burstTimer.UpdateTimer();
+                if (burstTimer.isReady()) { 
+                counter++;
+                if(counter > 5)
+                    {
+                        Debug.WriteLine("spawn limit.");
+                    }
+                    else
+                    {
+                        SpawnEnemy();
+                    }
+                burstTimer.ResetToZero();
+                }
+            }
+            else
+            {
+                counter = 0;
+            }
+           
+
+            
             base.Update();
         
         }
 
         public virtual void SpawnEnemy()
         {
-            //   GameGlobals.PassEnemy(new Popcorn(new Vector2(pos.X, pos.Y)));
+           
             GameGlobals.PassEnemy(new Popcorn(pos));
         }
 

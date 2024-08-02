@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,23 @@ namespace Shmup
                     GameGlobals.PassProjectile(new Bullet(new Vector2(this.pos.X, this.pos.Y - 10), new Vector2(pos.X, pos.Y), this));
                     fireTimer.ResetToZero();
                 }
+            }
+
+            if (this.pos.X + dim.X/2 >= Globals.screenBound.Right)
+            {
+                this.pos.X = Globals.screenBound.Right - dim.X / 2;
+            }
+             if (this.pos.Y + dim.Y/2 >= Globals.screenBound.Bottom)
+            {
+                this.pos.Y = Globals.screenBound.Bottom - dim.Y / 2;
+            }
+             if (this.pos.X - dim.X / 2 <= Globals.screenBound.Left)
+            {
+                this.pos.X = Globals.screenBound.Left + dim.X/2;
+            }
+             if (this.pos.Y - dim.Y/2 <= Globals.screenBound.Top)
+            {
+                this.pos.Y = Globals.screenBound.Top + dim.Y /2;
             }
 
             base.Update();

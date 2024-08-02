@@ -18,22 +18,22 @@ namespace Shmup
         }
         public void Update(World w)
         {
-            playerHealth.Update(w.ship.health, w.ship.healthMax);
+            playerHealth.Update(w.user.ship.health, w.user.ship.healthMax);
 
         
         }
 
         public void Draw(World w)
         {
-            string tempStr = "Score: " + w.score;
-            Globals.spriteBatch.DrawString(font, tempStr, new Vector2(0, 0), Color.LimeGreen);
+            string tempStr = "Score: " + GameGlobals.score;
+            Globals.spriteBatch.DrawString(font, tempStr, new Vector2(50, 10), Color.LimeGreen);
             playerHealth.draw(new Vector2(Globals.screenWidth/2 - 39, 490));
 
-            if (w.ship.isDead)
+            if (w.user.ship.isDead)
             {
                 tempStr = "YOU ARE DEAD";
                 Vector2 strDim = font.MeasureString(tempStr);
-                Globals.spriteBatch.DrawString(font, "YOU ARE DEAD", new Vector2(Globals.screenWidth/2 - strDim.X/2, Globals.screenHeight/2 - strDim.Y/2), Color.LimeGreen);
+                Globals.spriteBatch.DrawString(font, "YOU ARE DEAD", new Vector2(Globals.screenWidth/2 - strDim.X/2, Globals.screenHeight/2 - 50), Color.LimeGreen);
             }
 
         }

@@ -11,7 +11,12 @@ namespace Shmup
     {
         public Popcorn(Vector2 pos) : base(Globals.SPRITE_PATH + "\\Enemies\\Popcorn", pos, new Vector2(16,16))
         {
-            base.speed = 4.5f;
+            Random r = new Random();
+            float min = 2.0f;
+            float max = 4.0f;
+            float randomFloat = (float)(r.NextDouble() * (max - min) + min);
+
+            base.speed = randomFloat;
         }
 
         public override void Update()

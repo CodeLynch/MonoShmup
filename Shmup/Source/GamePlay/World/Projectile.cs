@@ -47,6 +47,11 @@ namespace Shmup
                 if(Vector2.Distance(this.pos, hits[i].pos) < hits[i].hitDistance)
                 {
                     hits[i].TakeDamage(1f);
+                    SetScore(GameGlobals.score + 1);
+                    if (hits[i].isDead)
+                    {
+                        SetScore(GameGlobals.score + 2);
+                    }
                     return true;
                 }
             }
@@ -56,6 +61,11 @@ namespace Shmup
         public override void Draw()
         {
             base.Draw();
+        }
+
+        public virtual void SetScore(int score)
+        {
+            GameGlobals.score = score;
         }
     }
 }

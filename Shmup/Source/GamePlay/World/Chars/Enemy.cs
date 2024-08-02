@@ -15,9 +15,9 @@ namespace Shmup
             speed = 2f;
         }
 
-        public virtual void Update(Ship ship)
+        public override void Update(Player enemy)
         {
-            AI(ship);
+            AI(enemy.ship);
             base.Update();
         }
 

@@ -9,34 +9,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Shmup;
+using System.Diagnostics;
 
 
 namespace Shmup
 {
     public class World
     {
-        public int score;
-        public Ship ship;
+        public User user;
+        public AIPlayer aiPlayer;
         public Pilot pilot;
         public List<Projectile> projectiles = new();
-        public List<Enemy> enemies = new();
-        public List<Spawn> spawnpts = new();
         public UI ui;
         public PassObject resetGame;
 
         public World(PassObject reset)
         {
-            score = 0;
-            ship = new Ship(Globals.SPRITE_PATH + "vector", new Vector2(380, 390), new Vector2(32, 32));
+            
             pilot = new Pilot(new Vector2(Globals.screenWidth/2, 460), new Vector2(64, 64));
+            user = new User();
+            aiPlayer = new AIPlayer(user.ship);
+
+
             GameGlobals.PassProjectile = AddProjectile;
             GameGlobals.PassEnemy = AddEnemy;
 
-            spawnpts.Add(new Spawn(new Vector2(0, 0), new Vector2(32, 32)));
-            spawnpts.Add(new Spawn(new Vector2(Globals.screenWidth/2, 0), new Vector2(32, 32)));
-            spawnpts[spawnpts.Count - 1].spawnTimer.AddToTimer(1000000);
-            spawnpts.Add(new Spawn(new Vector2(Globals.screenWidth, 0), new Vector2(32, 32)));
-            spawnpts[spawnpts.Count - 1].spawnTimer.AddToTimer(5000000);
+            
 
             ui = new UI();
 
@@ -45,7 +43,7 @@ namespace Shmup
 
         public virtual void Update()
         {
-            if (ship.isDead) {
+            if (user.ship.isDead) {
                 if (Globals.keyboard.GetPress("Enter"))
                 {
                     resetGame(null);
@@ -54,30 +52,18 @@ namespace Shmup
             else
             {
 
-            ship.Update();
+                user.Update(aiPlayer, Vector2.Zero);
+                aiPlayer.Update(user, Vector2.Zero);
+                
 
-            for (int i = 0; i < spawnpts.Count; i++)
-            {
-                spawnpts[i].Update();
-            }
-
-            for (int i = 0; i < projectiles.Count; i++) {
-                projectiles[i].Update(enemies.ToList<Char2D>());
-                if (projectiles[i].isHit) { 
-                    projectiles.RemoveAt(i);
-                    i--;
+                for (int i = 0; i < projectiles.Count; i++) {
+                    projectiles[i].Update(aiPlayer.chars.ToList<Char2D>());
+                    if (projectiles[i].isHit) { 
+                        projectiles.RemoveAt(i);
+                        i--;
+                    }
                 }
-            }
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                enemies[i].Update(ship);
-                if (enemies[i].isDead)
-                {
-                    score += 5;
-                    enemies.RemoveAt(i);
-                    i--;
-                }
-            }
+                
             }
 
             ui.Update(this);
@@ -85,7 +71,7 @@ namespace Shmup
 
         public virtual void AddEnemy(object o)
         {
-            enemies.Add((Enemy)o);
+            aiPlayer.AddChar((Enemy)o);
         }
         public virtual void AddProjectile(object o)
         {
@@ -95,23 +81,18 @@ namespace Shmup
         public virtual void Draw()
         {
 
-            if (!ship.isDead) { 
-                ship.Draw();
+            if (!user.ship.isDead) { 
                 for (int i = 0; i < projectiles.Count; i++)
                 {
                     projectiles[i].Draw();
                 }
-                for (int i = 0; i < enemies.Count; i++)
-                {
-                    enemies[i].Draw();
-                }
-                for (int i = 0; i < spawnpts.Count; i++)
-                {
-                    spawnpts[i].Draw();
-                }
+               
+               
             }
 
             pilot.Draw();
+            user.Draw();
+            aiPlayer.Draw();
             ui.Draw(this);
         }
 

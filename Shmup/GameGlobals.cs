@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Shmup
 {
-    internal class GameGlobals
+    public class GameGlobals
     {
+        public static int score;
         public static PassObject PassProjectile, PassEnemy;
 
     }

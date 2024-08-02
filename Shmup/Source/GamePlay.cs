@@ -25,6 +25,7 @@ namespace Shmup
 
         public virtual void ResetWorld(Object o)
         {
+            GameGlobals.score = 0;
             world = new World(ResetWorld);
         }
 

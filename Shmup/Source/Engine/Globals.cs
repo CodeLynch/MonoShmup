@@ -17,6 +17,7 @@ namespace Shmup
     {
         public static int screenHeight, screenWidth;
         public static ContentManager content;
+        public static Rectangle screenBound;
         public static SpriteBatch spriteBatch;
         public static string SPRITE_PATH = "sprites\\";
         public static GameTime gameTime;
