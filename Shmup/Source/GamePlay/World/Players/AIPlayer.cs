@@ -12,8 +12,8 @@ namespace Shmup
         Ship enemy;
         public AIPlayer(Ship enemy) : base()
         {
-            spawns.Add(new Spawn(new Vector2(70, 40), new Vector2(32, 32)));
-            spawns.Add(new Spawn(new Vector2(Globals.screenWidth - 70, 40), new Vector2(32, 32)));
+            spawns.Add(new Spawn(new Vector2(Globals.screenBound.Left + 20, Globals.screenBound.Top + 10), new Vector2(32, 32)));
+            spawns.Add(new Spawn(new Vector2(Globals.screenBound.Right - 20, Globals.screenBound.Top + 10), new Vector2(32, 32)));
             spawns[spawns.Count - 1].coolDown.AddToTimer(8000);
             this.enemy = enemy;
         }

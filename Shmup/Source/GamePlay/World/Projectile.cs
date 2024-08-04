@@ -39,6 +39,13 @@ namespace Shmup
             {
                 isHit = true;
             }
+            if(pos.X >= Globals.screenBound.Right || 
+                pos.Y >= Globals.screenBound.Bottom || 
+                pos.X <= Globals.screenBound.Left || 
+                pos.Y <= Globals.screenBound.Top)
+            {
+                isHit = true;
+            }
         }
 
         public virtual bool DidHit(List<Char2D> hits) {

@@ -14,7 +14,7 @@ namespace Shmup
         public MyTimer coolDown = new MyTimer(3000);
         private int counter = 0;
         private bool canSpawn = false;
-        public Spawn(Vector2 pos, Vector2 dim) : base(Globals.SPRITE_PATH + "\\enemies\\popcorn", pos, dim)
+        public Spawn(Vector2 pos, Vector2 dim) : base("none", pos, dim)
         {
         }
 
@@ -30,14 +30,8 @@ namespace Shmup
                 burstTimer.UpdateTimer();
                 if (burstTimer.isReady()) { 
                 counter++;
-                if(counter > 5)
-                    {
-                        Debug.WriteLine("spawn limit.");
-                    }
-                    else
-                    {
-                        SpawnEnemy();
-                    }
+                if(counter <= 5)
+                SpawnEnemy();
                 burstTimer.ResetToZero();
                 }
             }

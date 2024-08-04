@@ -20,7 +20,16 @@ namespace Shmup
         
             this.pos = pos;
             this.dim = dim;
-            tex = Globals.content.Load<Texture2D>(texturePath);
+            if(texturePath != "none")
+            {
+                tex = Globals.content.Load<Texture2D>(texturePath);
+            }
+            else
+            {
+                
+                tex = new Texture2D(Globals.spriteBatch.GraphicsDevice, 1, 1);
+                tex.SetData<Color>(new Color[] { Color.Transparent });
+            }
         }
 
         public virtual void Update(){
