@@ -10,46 +10,22 @@ namespace Shmup
 {
     public class Spawn: Regular2d
     {
-        public MyTimer burstTimer = new MyTimer(100);
-        public MyTimer coolDown = new MyTimer(3000);
-        private int counter = 0;
-        private bool canSpawn = false;
-        public Spawn(Vector2 pos, Vector2 dim) : base("none", pos, dim)
+        public int ownerID;
+        public MyTimer coolDown;
+        public bool canSpawn = true;
+        
+        public Spawn(Vector2 pos, Vector2 dim, int owner) : base("none", pos, dim)
         {
+            ownerID = owner;   
         }
 
         public override void Update() {
-            coolDown.UpdateTimer();
-            if (coolDown.isReady())
-            {
-                canSpawn = !canSpawn;
-                coolDown.ResetToZero();
-            }
-            if (canSpawn)
-            {
-                burstTimer.UpdateTimer();
-                if (burstTimer.isReady()) { 
-                counter++;
-                if(counter <= 5)
-                SpawnEnemy();
-                burstTimer.ResetToZero();
-                }
-            }
-            else
-            {
-                counter = 0;
-            }
-           
-
-            
             base.Update();
-        
         }
 
         public virtual void SpawnEnemy()
         {
-           
-            GameGlobals.PassEnemy(new Popcorn(pos));
+
         }
 
         public override void Draw()

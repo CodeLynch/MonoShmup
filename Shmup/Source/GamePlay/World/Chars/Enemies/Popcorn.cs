@@ -9,7 +9,7 @@ namespace Shmup
 {
     public class Popcorn:Enemy
     {
-        public Popcorn(Vector2 pos) : base(Globals.SPRITE_PATH + "\\Enemies\\Popcorn", pos, new Vector2(16,16))
+        public Popcorn(Vector2 pos, int owner) : base(Globals.SPRITE_PATH + "\\Enemies\\Popcorn", pos, new Vector2(16,16), owner)
         {
             Random r = new Random();
             float min = 2.0f;

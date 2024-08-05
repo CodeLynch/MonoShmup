@@ -10,12 +10,13 @@ namespace Shmup
 {
     public class Char2D: Regular2d
     {
+        public int ownerID;
         public bool isDead;
         public float hitDistance, health, healthMax;
-        public Char2D(string texPath, Vector2 pos, Vector2 dim) : base(texPath, pos, dim)
+        public Char2D(string texPath, Vector2 pos, Vector2 dim, int owner) : base(texPath, pos, dim)
         {
+            ownerID = owner;
             isDead = false;
-
             health = 1;
             healthMax = health;
 

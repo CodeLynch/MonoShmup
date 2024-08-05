@@ -10,9 +10,9 @@ namespace Shmup
 {
     public class User : Player
     {
-        public User() : base()
+        public User(int id) : base(id)
         {
-            this.ship = new Ship(Globals.SPRITE_PATH + "vector", new Vector2(380, 390), new Vector2(32, 32));
+            this.ship = new Ship(Globals.SPRITE_PATH + "vector", new Vector2(380, 390), new Vector2(32, 32), id);
         }
 
         public override void Update(Player enemy, Vector2 offset)

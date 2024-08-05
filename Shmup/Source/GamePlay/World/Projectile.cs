@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace Shmup
 
         public virtual void Update(List<Char2D> hits)
         {
+            Debug.WriteLine("hits:" + hits);
             pos += direction * speed;
             timer.UpdateTimer();
             if (timer.isReady())

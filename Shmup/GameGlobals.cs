@@ -9,7 +9,7 @@ namespace Shmup
     public class GameGlobals
     {
         public static int score;
-        public static PassObject PassProjectile, PassEnemy;
+        public static PassObject PassProjectile, PassSpawn, PassEnemy;
 
     }
 }

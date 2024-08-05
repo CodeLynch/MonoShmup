@@ -27,12 +27,13 @@ namespace Shmup
         {
             
             pilot = new Pilot(new Vector2(Globals.screenWidth/2, 460), new Vector2(64, 64));
-            user = new User();
-            aiPlayer = new AIPlayer(user.ship);
+            user = new User(1);
+            aiPlayer = new AIPlayer(user.ship, 2);
 
 
             GameGlobals.PassProjectile = AddProjectile;
-            GameGlobals.PassEnemy = AddEnemy;
+            GameGlobals.PassEnemy = AddChar;
+            GameGlobals.PassSpawn = AddSpawn;
 
             
 
@@ -54,10 +55,11 @@ namespace Shmup
 
                 user.Update(aiPlayer, Vector2.Zero);
                 aiPlayer.Update(user, Vector2.Zero);
-                
 
+                List<Char2D> activeChars = aiPlayer.chars.ToList<Char2D>();
+                activeChars.Add(user.ship);
                 for (int i = 0; i < projectiles.Count; i++) {
-                    projectiles[i].Update(aiPlayer.chars.ToList<Char2D>());
+                    projectiles[i].Update(activeChars);
                     if (projectiles[i].isHit) { 
                         projectiles.RemoveAt(i);
                         i--;
@@ -69,9 +71,33 @@ namespace Shmup
             ui.Update(this);
         }
 
-        public virtual void AddEnemy(object o)
+        public virtual void AddChar(object o)
         {
-            aiPlayer.AddChar((Enemy)o);
+            Char2D tempChar = (Char2D) o;
+            if(tempChar.ownerID == user.id)
+            {
+                user.AddChar(tempChar);
+            }
+            else if(tempChar.ownerID == aiPlayer.id)
+            {
+                aiPlayer.AddChar((Char2D)o);
+            }
+
+            //aiPlayer.AddChar((Enemy)o);
+        }
+        public virtual void AddSpawn(object o)
+        {
+            Spawn tempSpawn = (Spawn)o;
+            if (tempSpawn.ownerID == user.id)
+            {
+                user.AddSpawnPoint(tempSpawn);
+            }
+            else if (tempSpawn.ownerID == aiPlayer.id)
+            {
+                aiPlayer.AddSpawnPoint((Enemy)o);
+            }
+
+            //aiPlayer.AddChar((Enemy)o);
         }
         public virtual void AddProjectile(object o)
         {

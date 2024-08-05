@@ -12,7 +12,7 @@ namespace Shmup
     {
         private float speed;
         private MyTimer fireTimer = new MyTimer(150);
-        public Ship(string texPath, Vector2 pos, Vector2 dim) : base(texPath, pos, dim)
+        public Ship(string texPath, Vector2 pos, Vector2 dim, int owner) : base(texPath, pos, dim, owner)
         {
             health = 5;
             healthMax = health;

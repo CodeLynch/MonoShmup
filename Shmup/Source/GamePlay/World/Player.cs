@@ -11,10 +11,12 @@ namespace Shmup
 {
     public class Player
     {
+        public int id;
         public Ship ship;
         public List<Char2D> chars = new();
         public List<Spawn> spawns = new();
-        public Player() {
+        public Player(int id) {
+            this.id = id;
         }
 
         public virtual void Update(Player enemy, Vector2 offset) {
@@ -23,11 +25,12 @@ namespace Shmup
                 ship.Update();
             }
 
+
             for (int i = 0; i < chars.Count; i++)
             {
                 chars[i].Update(enemy);
                 if (chars[i].isDead)
-                {                    
+                {
                     chars.RemoveAt(i);
                     i--;
                 }
@@ -35,13 +38,25 @@ namespace Shmup
             for (int i = 0; i < spawns.Count; i++)
             {
                 spawns[i].Update();
+                if (!spawns[i].canSpawn)
+                {
+                    spawns.RemoveAt(i);
+                    i--;
+                }
             }
         }
 
         public virtual void AddChar(Object o)
         {
+            Char2D tempChar = (Char2D)o;
+            tempChar.ownerID = id;
+            chars.Add(tempChar);
+        }
 
-            chars.Add((Char2D)o);
+        public virtual void AddSpawnPoint(Object o){
+            Spawn tempSpawn = (Spawn)o;
+            tempSpawn.ownerID = id;
+            spawns.Add(tempSpawn);
         }
 
         public virtual void SetScore(int score)

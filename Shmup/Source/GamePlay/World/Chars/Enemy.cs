@@ -10,13 +10,14 @@ namespace Shmup
     public class Enemy: Char2D
     {
         public float speed;
-        public Enemy(string texPath,Vector2 pos, Vector2 dim): base(texPath, pos, dim)
+        public Enemy(string texPath,Vector2 pos, Vector2 dim, int owner): base(texPath, pos, dim, owner)
         {
             speed = 2f;
         }
 
         public override void Update(Player enemy)
         {
+            
             AI(enemy.ship);
             base.Update();
         }
