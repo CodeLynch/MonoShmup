@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Shmup
 {
@@ -25,6 +26,13 @@ namespace Shmup
 
         public void Draw(World w)
         {
+            Globals.baseEffect.Parameters["xSize"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["ySize"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["xDraw"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["yDraw"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["filterColor"].SetValue(Color.LimeGreen.ToVector4());
+            Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
+
             string tempStr = "Score: " + GameGlobals.score;
             Globals.spriteBatch.DrawString(font, tempStr, new Vector2(50, 10), Color.LimeGreen);
             playerHealth.draw(new Vector2(Globals.screenWidth/2 - 39, 490));

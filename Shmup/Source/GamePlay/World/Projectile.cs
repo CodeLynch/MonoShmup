@@ -69,7 +69,13 @@ namespace Shmup
 
         public override void Draw()
         {
-            base.Draw();
+            /*Globals.baseEffect.Parameters["xSize"].SetValue((float)tex.Bounds.Width);
+            Globals.baseEffect.Parameters["ySize"].SetValue((float)tex.Bounds.Height);
+            Globals.baseEffect.Parameters["xDraw"].SetValue((float)((int)dim.X));
+            Globals.baseEffect.Parameters["yDraw"].SetValue((float)((int)dim.Y));
+            Globals.baseEffect.Parameters["filterColor"].SetValue(Color.White.ToVector4());
+            Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
+           */ base.Draw();
         }
 
         public virtual void SetScore(int score)

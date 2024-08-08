@@ -20,6 +20,7 @@ namespace Shmup
         public AIPlayer aiPlayer;
         public Pilot pilot;
         public List<Projectile> projectiles = new();
+        public List<Char2D> allChars = new();
         public UI ui;
         public PassObject resetGame;
 
@@ -52,14 +53,16 @@ namespace Shmup
             }
             else
             {
+                allChars.Clear();
+                allChars.AddRange(user.getAllChars());
+                allChars.AddRange(aiPlayer.getAllChars());
 
                 user.Update(aiPlayer, Vector2.Zero);
                 aiPlayer.Update(user, Vector2.Zero);
 
-                List<Char2D> activeChars = aiPlayer.chars.ToList<Char2D>();
-                activeChars.Add(user.ship);
+                allChars.Add(user.ship);
                 for (int i = 0; i < projectiles.Count; i++) {
-                    projectiles[i].Update(activeChars);
+                    projectiles[i].Update(allChars);
                     if (projectiles[i].isHit) { 
                         projectiles.RemoveAt(i);
                         i--;

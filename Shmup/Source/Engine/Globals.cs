@@ -21,7 +21,8 @@ namespace Shmup
         public static SpriteBatch spriteBatch;
         public static string SPRITE_PATH = "sprites\\";
         public static GameTime gameTime;
-        
+        public static Effect baseEffect;
+
         public static MyKeyboard keyboard;
         public static MyMouseControl mouse;
 

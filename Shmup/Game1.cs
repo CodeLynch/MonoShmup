@@ -41,6 +41,7 @@ namespace Shmup
             // TODO: use this.Content to load your game content here
 
             cursor = new Regular2d(Globals.SPRITE_PATH + "\\cursor\\cursor", Vector2.Zero, new Vector2(16, 16));
+            Globals.baseEffect = Globals.content.Load<Effect>("shaders\\AntiAlias");
 
             bound = new Bound(Globals.screenBound, 3);
             Globals.keyboard = new MyKeyboard();
@@ -71,11 +72,13 @@ namespace Shmup
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-            Globals.spriteBatch.Begin();
+            Globals.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
             gameplay.Draw();
+            
             bound.DrawRectangle(Globals.spriteBatch, Color.LimeGreen);
             cursor.Draw(new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMouse.Y), Vector2.Zero, Color.White);
+           
             Globals.spriteBatch.End();
 
             base.Draw(gameTime);

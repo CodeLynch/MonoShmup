@@ -59,6 +59,15 @@ namespace Shmup
             spawns.Add(tempSpawn);
         }
 
+        public List<Char2D> getAllChars()
+        {
+            List<Char2D> allChars = new();
+            allChars.AddRange(chars.ToList<Char2D>());
+
+            return allChars;
+
+        }
+
         public virtual void SetScore(int score)
         {
             GameGlobals.score = score;

@@ -32,7 +32,18 @@ namespace Shmup
 
         public virtual void draw(Vector2 offset)
         {
+            Globals.baseEffect.Parameters["xSize"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["ySize"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["xDraw"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["yDraw"].SetValue(1.0f);
+            Globals.baseEffect.Parameters["filterColor"].SetValue(Color.Black.ToVector4());
+            Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
+            
             barBg.Draw(offset, Vector2.Zero, Color.Black);
+
+            Globals.baseEffect.Parameters["filterColor"].SetValue(color.ToVector4());
+            Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
+            
             bar.Draw( new Vector2(offset.X + border, offset.Y + border), Vector2.Zero, color);
         }
 

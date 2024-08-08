@@ -74,5 +74,10 @@ namespace Shmup
             }
             base.Update();
         }
+
+        public override void Draw()
+        {
+            base.Draw();
+        }
     }
 }
