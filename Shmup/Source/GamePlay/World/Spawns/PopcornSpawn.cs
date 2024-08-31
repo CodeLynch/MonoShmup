@@ -54,6 +54,7 @@ namespace Shmup
 
         public override void SpawnEnemy()
         {
+            Console.WriteLine("this is the pos " + base.pos);
             Enemy tempEnemy = new Popcorn(pos, ownerID);
             if(tempEnemy != null)
             {

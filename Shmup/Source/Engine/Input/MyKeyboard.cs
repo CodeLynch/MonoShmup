@@ -51,5 +51,29 @@ namespace Shmup
                 pressedKeys.Add(new MyKey(newKB.GetPressedKeys()[i].ToString(), 1));
             }
         }
+
+        public bool GetSinglepress(string key)
+        {
+            for (int i = 0; i < pressedKeys.Count; i++)
+            {
+                bool isIn = false;
+
+                for (int j = 0; j < prevPressedKeys.Count; j++)
+                {
+                    if (pressedKeys[i].key == prevPressedKeys[j].key)
+                    {
+                        isIn = true;
+                        break;
+                    }
+                }
+                if(!isIn && (pressedKeys[i].key == key || pressedKeys[i].print == key))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
     }
 }

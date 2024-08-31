@@ -19,6 +19,7 @@ namespace Shmup
         public static ContentManager content;
         public static Rectangle screenBound;
         public static SpriteBatch spriteBatch;
+        public static System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
         public static string SPRITE_PATH = "sprites\\";
         public static GameTime gameTime;
         public static Effect baseEffect;

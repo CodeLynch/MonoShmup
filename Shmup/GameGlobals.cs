@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace Shmup
 {
     public class GameGlobals
     {
+        public static bool paused = false;
         public static int score;
         public static PassObject PassProjectile, PassSpawn, PassEnemy;
 

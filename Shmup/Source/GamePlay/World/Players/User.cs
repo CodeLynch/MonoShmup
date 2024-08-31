@@ -5,14 +5,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Shmup
 {
     public class User : Player
     {
-        public User(int id) : base(id)
+
+        public User(int id, XElement data) : base(id, data)
         {
-            this.ship = new Ship(Globals.SPRITE_PATH + "vector", new Vector2(380, 390), new Vector2(32, 32), id);
+            //this.ship = new Ship(Globals.SPRITE_PATH + "vector", new Vector2(380, 390), new Vector2(32, 32), id);
+            
         }
 
         public override void Update(Player enemy, Vector2 offset)

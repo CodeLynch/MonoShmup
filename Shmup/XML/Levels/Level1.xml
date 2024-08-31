@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+	<User>
+		<Ship>
+			<Pos>
+				<x>380</x>
+				<y>390</y>
+			</Pos>
+		</Ship>
+	</User>
+	<AIPlayer>
+		<SpawnPoint>
+			<Type>PopcornSpawn</Type>
+			<Pos>
+				<x>745</x>
+				<y>20</y>
+			</Pos>
+			<TimerAdd>8000</TimerAdd>
+		</SpawnPoint>
+		<SpawnPoint>
+			<Type>MidSpawn</Type>
+			<Pos>
+				<x>87</x>
+				<y>50</y>
+			</Pos>
+			<TimerAdd>0</TimerAdd>
+			<Direction>2</Direction>
+		</SpawnPoint>
+		
+	</AIPlayer>
+</Root>

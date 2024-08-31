@@ -15,6 +15,13 @@ namespace Shmup
         //3 means it moves down
         //4 means it moves left
         public int direction;
+
+        public MidSpawn(Vector2 pos, Vector2 dim, int owner) : base(pos, dim, owner)
+        {
+            direction = 2;
+            ownerID = owner;
+            coolDown = new MyTimer(2000);
+        }
         public MidSpawn(Vector2 pos, Vector2 dim, int owner, int dir) : base(pos, dim, owner)
         {
             direction = dir;

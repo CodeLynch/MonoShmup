@@ -11,9 +11,11 @@ namespace Shmup
 {
     public class UI
     {
+        public Regular2d pauseOverlay;
         public SpriteFont font;
         public DisplayBar playerHealth;
         public UI() {
+            pauseOverlay = new Regular2d(Globals.SPRITE_PATH + "\\UI\\pause", new Vector2(Globals.screenWidth / 2, Globals.screenHeight / 2 - 32), new Vector2(64, 64));
             font = Globals.content.Load<SpriteFont>("fonts\\Score");
             playerHealth = new DisplayBar(new Vector2(8, 69), 2, Color.LimeGreen);
         }
@@ -41,9 +43,16 @@ namespace Shmup
             {
                 tempStr = "YOU ARE DEAD";
                 Vector2 strDim = font.MeasureString(tempStr);
-                Globals.spriteBatch.DrawString(font, "YOU ARE DEAD", new Vector2(Globals.screenWidth/2 - strDim.X/2, Globals.screenHeight/2 - 50), Color.LimeGreen);
+                Globals.spriteBatch.DrawString(font, tempStr, new Vector2(Globals.screenWidth/2 - strDim.X/2, Globals.screenHeight/2 - 50), Color.LimeGreen);
             }
+            if (GameGlobals.paused)
+            {
+                tempStr = "PAUSED";
+                Vector2 strDim = font.MeasureString(tempStr);
+                Globals.spriteBatch.DrawString(font, tempStr, new Vector2(Globals.screenWidth / 2 - strDim.X / 2, Globals.screenHeight / 2 - 120), Color.LimeGreen);
 
+                pauseOverlay.Draw();
+            }
         }
     }
     

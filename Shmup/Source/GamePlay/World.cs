@@ -28,14 +28,12 @@ namespace Shmup
         {
             
             pilot = new Pilot(new Vector2(Globals.screenWidth/2, 460), new Vector2(64, 64));
-            user = new User(1);
-            aiPlayer = new AIPlayer(user.ship, 2);
-
+            LoadData(1);
 
             GameGlobals.PassProjectile = AddProjectile;
             GameGlobals.PassEnemy = AddChar;
             GameGlobals.PassSpawn = AddSpawn;
-
+            GameGlobals.paused = false;
             
 
             ui = new UI();
@@ -53,22 +51,28 @@ namespace Shmup
             }
             else
             {
-                allChars.Clear();
-                allChars.AddRange(user.getAllChars());
-                allChars.AddRange(aiPlayer.getAllChars());
+                if (!GameGlobals.paused)
+                {
+                    allChars.Clear();
+                    allChars.AddRange(user.getAllChars());
+                    allChars.AddRange(aiPlayer.getAllChars());
 
-                user.Update(aiPlayer, Vector2.Zero);
-                aiPlayer.Update(user, Vector2.Zero);
+                    user.Update(aiPlayer, Vector2.Zero);
+                    aiPlayer.Update(user, Vector2.Zero);
 
-                allChars.Add(user.ship);
-                for (int i = 0; i < projectiles.Count; i++) {
-                    projectiles[i].Update(allChars);
-                    if (projectiles[i].isHit) { 
-                        projectiles.RemoveAt(i);
-                        i--;
+                    allChars.Add(user.ship);
+                    for (int i = 0; i < projectiles.Count; i++) {
+                        projectiles[i].Update(allChars);
+                        if (projectiles[i].isHit) { 
+                            projectiles.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
-                
+                if (Globals.keyboard.GetSinglepress("Space"))
+                {
+                    GameGlobals.paused = !GameGlobals.paused;
+                }
             }
 
             ui.Update(this);
@@ -105,6 +109,26 @@ namespace Shmup
         public virtual void AddProjectile(object o)
         {
             projectiles.Add((Projectile) o);
+        }
+
+        public virtual void LoadData(int level)
+        {
+            XDocument xml = XDocument.Load("XML\\Levels\\Level" + level + ".xml");
+            XElement tempElem = null;
+            if(xml.Element("Root").Element("User") != null)
+            {
+                tempElem = xml.Element("Root").Element("User");
+            }
+            user = new User(1, tempElem);
+
+            tempElem = null;
+            if (xml.Element("Root").Element("AIPlayer") != null)
+            {
+                tempElem = xml.Element("Root").Element("AIPlayer");
+            }
+
+            aiPlayer = new AIPlayer(user.ship, 2, tempElem);
+
         }
 
         public virtual void Draw()
