@@ -72,6 +72,12 @@ namespace Shmup
                 GameGlobals.PassProjectile(new MidBullet(enemy.ship.pos, pos, this));
                 shootTimer.ResetToZero();
             }
+
+            if (Vector2.Distance(this.pos, enemy.ship.pos) < 16)
+            {
+                enemy.ship.TakeDamage(1f);
+                
+            }
             base.Update();
         }
 

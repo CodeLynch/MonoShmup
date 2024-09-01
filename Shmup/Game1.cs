@@ -76,7 +76,6 @@ namespace Shmup
 
             gameplay.Draw();
             
-            bound.DrawRectangle(Globals.spriteBatch, Color.LimeGreen);
             Globals.baseEffect.Parameters["xSize"].SetValue((float)cursor.tex.Bounds.Width);
             Globals.baseEffect.Parameters["ySize"].SetValue((float)cursor.tex.Bounds.Height);
             Globals.baseEffect.Parameters["xDraw"].SetValue((float)cursor.dim.X);
@@ -84,6 +83,7 @@ namespace Shmup
             Globals.baseEffect.Parameters["filterColor"].SetValue(Color.White.ToVector4());
             Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
             cursor.Draw(new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMouse.Y), Vector2.Zero, Color.White);
+            bound.DrawRectangle(Globals.spriteBatch, Color.LimeGreen);
            
             Globals.spriteBatch.End();
 

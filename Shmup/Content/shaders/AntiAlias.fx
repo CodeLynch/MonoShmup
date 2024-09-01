@@ -43,7 +43,7 @@ float4 PixelShaderFunction(VertexShadeOutput input):COLOR{
         color = float4(texColor.r, texColor.g, texColor.b, texColor.a);
     }
 
-    return color * filterColor;
+    return color * filterColor * input.Color;
 }
 
 technique Technique1{

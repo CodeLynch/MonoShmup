@@ -36,7 +36,7 @@ namespace Shmup
             GameGlobals.paused = false;
             
 
-            ui = new UI();
+            ui = new UI(reset);
 
             resetGame = reset;
         }

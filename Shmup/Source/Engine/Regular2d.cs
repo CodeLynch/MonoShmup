@@ -35,6 +35,26 @@ namespace Shmup
         public virtual void Update(){
 
         }
+
+        public virtual bool Hover()
+        {
+            return HoverImg();
+        }
+
+        public virtual bool HoverImg()
+        {
+            Vector2 mousePos = new Vector2(Globals.mouse.newMousePos.X , Globals.mouse.newMousePos.Y);
+            if (mousePos.X >= pos.X - dim.X/2 && mousePos.X <= pos.X + dim.X / 2 &&
+                mousePos.Y >= pos.Y - dim.Y/2 && mousePos.Y <= pos.Y + dim.Y / 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public virtual void Draw() {
             if (tex != null) {
                 Globals.spriteBatch.Draw(tex, new Rectangle((int)(pos.X), (int)(pos.Y), (int)(dim.X), (int)(dim.Y)), null, Color.White, rot, new Vector2(tex.Bounds.Width/2, tex.Bounds.Height/2), new SpriteEffects(), 0);

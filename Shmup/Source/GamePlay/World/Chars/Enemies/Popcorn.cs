@@ -26,6 +26,12 @@ namespace Shmup
 
         public override void Draw()
         {
+            Globals.baseEffect.Parameters["xSize"].SetValue((float)this.tex.Bounds.Width);
+            Globals.baseEffect.Parameters["ySize"].SetValue((float)this.tex.Bounds.Height);
+            Globals.baseEffect.Parameters["xDraw"].SetValue((float)this.dim.X);
+            Globals.baseEffect.Parameters["yDraw"].SetValue((float)this.dim.Y);
+            Globals.baseEffect.Parameters["filterColor"].SetValue(Color.Yellow.ToVector4());
+            Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
             base.Draw();
         }
     }
