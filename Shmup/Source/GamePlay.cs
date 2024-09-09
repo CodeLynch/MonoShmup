@@ -10,9 +10,10 @@ namespace Shmup
     {
         public int playState;
         public World world;
-        public GamePlay() {
+        public PassObject setGameState;
+        public GamePlay(PassObject setGameState) {
             playState = 0;
-
+            this.setGameState = setGameState;
             ResetWorld(null);
         }
         public virtual void Update()
@@ -26,7 +27,7 @@ namespace Shmup
         public virtual void ResetWorld(Object o)
         {
             GameGlobals.score = 0;
-            world = new World(ResetWorld);
+            world = new World(ResetWorld, setGameState);
         }
 
         public virtual void Draw()

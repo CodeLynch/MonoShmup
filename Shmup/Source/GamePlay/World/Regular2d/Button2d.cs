@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Shmup
 {
@@ -19,6 +20,7 @@ namespace Shmup
         PassObject buttonClick;
         public Button2d(string texPath, Vector2 pos, Vector2 dim, string fontPath, string label, PassObject buttonClick, Object info):base(texPath, pos, dim)
         {
+            this.info = info;
             if(fontPath != "")
             {
                 font = Globals.content.Load<SpriteFont>(fontPath);
@@ -38,6 +40,7 @@ namespace Shmup
                 isHovered = true;
                 if (Globals.mouse.LeftClick())
                 {
+
                     isHovered = false;
                     isPressed = true;
                 }
@@ -67,7 +70,7 @@ namespace Shmup
         {
             if(buttonClick != null)
             {
-                buttonClick(info);
+                buttonClick(this.info);
             }
             ResetState();
         }

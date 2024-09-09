@@ -15,7 +15,7 @@ namespace Shmup
     public delegate object PassObjectAndReturn(object o);
     public class Globals
     {
-        public static int screenHeight, screenWidth;
+        public static int screenHeight, screenWidth, gameState = 0;
         public static ContentManager content;
         public static Rectangle screenBound;
         public static SpriteBatch spriteBatch;

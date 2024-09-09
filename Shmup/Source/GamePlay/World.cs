@@ -22,9 +22,9 @@ namespace Shmup
         public List<Projectile> projectiles = new();
         public List<Char2D> allChars = new();
         public UI ui;
-        public PassObject resetGame;
+        public PassObject resetGame, setGameState;
 
-        public World(PassObject reset)
+        public World(PassObject reset, PassObject setGameState)
         {
             
             pilot = new Pilot(new Vector2(Globals.screenWidth/2, 460), new Vector2(64, 64));
@@ -34,7 +34,7 @@ namespace Shmup
             GameGlobals.PassEnemy = AddChar;
             GameGlobals.PassSpawn = AddSpawn;
             GameGlobals.paused = false;
-            
+            this.setGameState = setGameState;
 
             ui = new UI(reset);
 
@@ -72,6 +72,11 @@ namespace Shmup
                 if (Globals.keyboard.GetSinglepress("Space"))
                 {
                     GameGlobals.paused = !GameGlobals.paused;
+                }
+                if (Globals.keyboard.GetSinglepress("Back"))
+                {
+                    resetGame(null);
+                    setGameState(0);
                 }
             }
 

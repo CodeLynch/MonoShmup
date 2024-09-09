@@ -30,7 +30,6 @@ namespace Shmup
 
         public virtual void Update(List<Char2D> hits)
         {
-            Debug.WriteLine("hits:" + hits);
             pos += direction * speed;
             timer.UpdateTimer();
             if (timer.isReady())

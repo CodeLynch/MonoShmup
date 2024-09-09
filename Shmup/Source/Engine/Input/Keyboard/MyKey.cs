@@ -33,7 +33,6 @@ namespace Shmup
             if (KEY.Length == 1 && (KEY[0] >= 'A' && KEY[0] <= 'Z'))
             {
                 tempStr = KEY;
-                Debug.WriteLine("youre pressing a key!");
             }
             if (KEY == "Space")
             {

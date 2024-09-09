@@ -12,6 +12,7 @@ namespace Shmup
         GamePlay gameplay;
         Bound bound;
         Regular2d cursor;
+        MainMenu menu;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -46,27 +47,50 @@ namespace Shmup
             bound = new Bound(Globals.screenBound, 3);
             Globals.keyboard = new MyKeyboard();
             Globals.mouse = new MyMouseControl();
-            gameplay = new GamePlay();
+            menu = new MainMenu(ChangeGameState, ExitGame);
+            gameplay = new GamePlay(ChangeGameState);
 
 
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             // TODO: Add your update logic here
-            Globals.gameTime = gameTime;
-            Globals.keyboard.Update();
-            Globals.mouse.Update();
-            gameplay.Update();
-            Globals.keyboard.UpdateOld();
-            Globals.mouse.UpdateOld();
+            
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
 
-            base.Update(gameTime);
+
+                Globals.gameTime = gameTime;
+                Globals.keyboard.Update();
+                Globals.mouse.Update();
+            if (Globals.gameState == 0)
+            {
+                menu.Update();
+            }
+            else if(Globals.gameState == 1) 
+            {
+                gameplay.Update();
+
+            }
+                Globals.keyboard.UpdateOld();
+                Globals.mouse.UpdateOld();
+                base.Update(gameTime);
+
         }
 
+        public virtual void ChangeGameState(Object info)
+        {
+
+            Globals.gameState = Convert.ToInt32(info, Globals.culture);
+        }
+
+        public virtual void ExitGame(Object info)
+        {
+            System.Environment.Exit(0);
+        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -74,8 +98,15 @@ namespace Shmup
             // TODO: Add your drawing code here
             Globals.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-            gameplay.Draw();
-            
+            if (Globals.gameState == 0)
+            {
+                menu.Draw();
+            }
+            else
+            {
+                gameplay.Draw();
+                bound.DrawRectangle(Globals.spriteBatch, Color.LimeGreen);            
+            }
             Globals.baseEffect.Parameters["xSize"].SetValue((float)cursor.tex.Bounds.Width);
             Globals.baseEffect.Parameters["ySize"].SetValue((float)cursor.tex.Bounds.Height);
             Globals.baseEffect.Parameters["xDraw"].SetValue((float)cursor.dim.X);
@@ -83,11 +114,9 @@ namespace Shmup
             Globals.baseEffect.Parameters["filterColor"].SetValue(Color.White.ToVector4());
             Globals.baseEffect.CurrentTechnique.Passes[0].Apply();
             cursor.Draw(new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMouse.Y), Vector2.Zero, Color.White);
-            bound.DrawRectangle(Globals.spriteBatch, Color.LimeGreen);
-           
-            Globals.spriteBatch.End();
-
             base.Draw(gameTime);
+
+            Globals.spriteBatch.End();
         }
     }
 }
