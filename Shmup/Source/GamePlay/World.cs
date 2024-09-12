@@ -36,11 +36,14 @@ namespace Shmup
             GameGlobals.paused = false;
             this.setGameState = setGameState;
 
-            ui = new UI(reset);
-
+            ui = new UI(reset, QuitGame);
             resetGame = reset;
         }
-
+        public virtual void QuitGame(Object info)
+        {
+            setGameState(info);
+            resetGame(info);
+        }
         public virtual void Update()
         {
             if (user.ship.isDead) {
@@ -68,6 +71,7 @@ namespace Shmup
                             i--;
                         }
                     }
+                    pilot.Update();
                 }
                 if (Globals.keyboard.GetSinglepress("Space"))
                 {

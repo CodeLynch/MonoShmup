@@ -12,21 +12,29 @@ namespace Shmup
     public class UI
     {
         public Regular2d pauseOverlay;
-        public Button2d resetButton;
+        public Button2d resetButton, quitButton;
         public SpriteFont font;
         public DisplayBar playerHealth;
-        public UI(PassObject reset) {
+        public PassObject resetGame;
+        public UI(PassObject reset, PassObject quit) {
             pauseOverlay = new Regular2d(Globals.SPRITE_PATH + "\\UI\\pause", new Vector2(Globals.screenWidth / 2, Globals.screenHeight / 2 - 32), new Vector2(64, 64));
             font = Globals.content.Load<SpriteFont>("fonts\\Score");
             playerHealth = new DisplayBar(new Vector2(8, 69), 2, Color.LimeGreen);
             resetButton = new Button2d(Globals.SPRITE_PATH + "\\UI\\button", new Vector2(Globals.screenWidth/2 , Globals.screenHeight/2 + 25), new Vector2(140, 50), "fonts\\SmallScore", "Reset Game", reset , "");
+            quitButton = new Button2d(Globals.SPRITE_PATH + "\\UI\\button", new Vector2(Globals.screenWidth / 2, Globals.screenHeight / 2 + 25), new Vector2(128, 32), "fonts\\SmallScore", "Quit", quit, 0);
+
         }
         public void Update(World w)
         {
             playerHealth.Update(w.user.ship.health, w.user.ship.healthMax);
+            
             if (w.user.ship.isDead)
             {
                 resetButton.Update();
+            }
+            else if (GameGlobals.paused)
+            {
+                quitButton.Update();
             }
         }
 
@@ -55,7 +63,7 @@ namespace Shmup
                 tempStr = "PAUSED";
                 Vector2 strDim = font.MeasureString(tempStr);
                 Globals.spriteBatch.DrawString(font, tempStr, new Vector2(Globals.screenWidth / 2 - strDim.X / 2, Globals.screenHeight / 2 - 120), Color.LimeGreen);
-
+                quitButton.Draw();
                 pauseOverlay.Draw();
             }
             

@@ -14,13 +14,14 @@ namespace Shmup
     public class Regular2d
     {
         public float rot;
-        public Vector2 pos, dim;
+        public Vector2 pos, dim, frameSize;
         public Texture2D tex;
         public Regular2d(string texturePath, Vector2 pos, Vector2 dim) {
-        
-            this.pos = pos;
-            this.dim = dim;
-            if(texturePath != "none")
+
+            this.pos = new Vector2(pos.X, pos.Y);
+            this.dim = new Vector2(dim.X, dim.Y);
+            rot = 0.0f;
+            if (texturePath != "none")
             {
                 tex = Globals.content.Load<Texture2D>(texturePath);
             }
@@ -31,6 +32,10 @@ namespace Shmup
                 tex.SetData<Color>(new Color[] { Color.Transparent });
             }
         }
+
+        
+            
+        
 
         public virtual void Update(){
 

@@ -86,7 +86,6 @@ namespace Shmup
 
             Globals.gameState = Convert.ToInt32(info, Globals.culture);
         }
-
         public virtual void ExitGame(Object info)
         {
             System.Environment.Exit(0);
